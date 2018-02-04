@@ -77,7 +77,7 @@ function readTag(buffer, offset, bigEndian) {
     var valueOffset = valueSize * numValues <= 4 ? offset + 6 : readUInt32(buffer, offset + 6, bigEndian) + 6;
 
     // Prevent damaged Exif data to cause Out Of Memory
-    if (valueOffset >= buffer.length || valueOffset + numValues * valueSize >= buffer.length)
+    if (valueOffset >= buffer.length || numValues > 1000000 || valueOffset + numValues * valueSize >= buffer.length)
         throw new Error("Damaged Exif data");
 
     // Special case for ascii strings
